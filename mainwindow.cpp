@@ -11,15 +11,77 @@ double MainWindow::sigmoid(double number)
     return (1/(1+exp(-1*number)));
 }
 
+void MainWindow::output_calculation()
+{
+
+//ui->output_sb->setValue();
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
 
+    buttons.push_back(ui->SethiddenLayerBias_pb);
+    buttons.push_back(ui->SethiddenLayerwehights_pb);
+    buttons.push_back(ui->SetactivationLayerBias_pb);
+
+    ui->toActivateLabel_l->setText(QString("<ul>\
+                                            <li>Set inputs values and wehights.</li>\
+                                            <li>Set weights of Hidden layer to Activation Layer.</li>\
+                                            <li>Set biases of Hidden layer nodes.</li>\
+                                            <li>Set biases of Activation Layer nodes.</li>\
+                                            </ul>"));
+
     connect(ui->set_pb, SIGNAL(clicked()), this , SLOT(create_shapes()));
 
     ui->output_sb->hide();
+
+    connect(ui->SethiddenLayerBias_pb,&QPushButton::clicked,[=](){
+        std::vector<int> temp;
+        all_weights.push_back(temp);
+        weights_input * inputs_widget = new weights_input(nullptr,-1,number_nodes,&(all_weights.at(all_weights.size()-1)),0,&buttons);
+        inputs_widget->show();
+        inputs_widget->raise();
+
+        ui->toActivateLabel_l->setText(QString("<ul>\
+                                                <li>Set weights of Hidden layer to Activation Layer.</li>\
+                                                <li>Set biases of Activation Layer nodes.</li>\
+                                                </ul>"));
+        ui->SethiddenLayerwehights_pb->setEnabled(1);
+
+    });
+
+    connect(ui->SethiddenLayerwehights_pb,&QPushButton::clicked,[=](){
+        std::vector<int> temp;
+        all_weights.push_back(temp);
+        weights_input * inputs_widget = new weights_input(nullptr,-2,number_nodes,&(all_weights.at(all_weights.size()-1)),0,&buttons);
+        inputs_widget->show();
+        inputs_widget->raise();
+
+        ui->toActivateLabel_l->setText(QString("<ul>\
+                                                <li>Set biases of Activation Layer nodes.</li>\
+                                                </ul>"));
+        ui->SetactivationLayerBias_pb->setEnabled(1);
+
+    });
+
+    connect(ui->SetactivationLayerBias_pb,&QPushButton::clicked,[=](){
+        std::vector<int> temp;
+        all_weights.push_back(temp);
+        weights_input * inputs_widget = new weights_input(nullptr,-3,1,&(all_weights.at(all_weights.size()-1)),0,&buttons);
+        inputs_widget->show();
+        inputs_widget->raise();
+
+        ui->toActivateLabel_l->setText(QString("<ul>\
+                                                <li>Ready to Calculate</li>\
+                                                </ul>"));
+        ui->calculate_pb->setEnabled(1);
+
+        qDebug()<<all_weights;
+
+    });
 
 }
 
@@ -31,12 +93,31 @@ void MainWindow::create_shapes()
     //clear first, if exist
     if(inputs.size() != 0)
     {
+        ui->toActivateLabel_l->setText(QString("<ul>\
+                                                <li>Set inputs values and wehights.</li>\
+                                                <li>Set weights of Hidden layer to Activation Layer.</li>\
+                                                <li>Set biases of Hidden layer nodes.</li>\
+                                                <li>Set biases of Activation Layer nodes.</li>\
+                                                </ul>"));
+
+        ui->SethiddenLayerBias_pb->setEnabled(0);
+        ui->SethiddenLayerwehights_pb->setEnabled(0);
+        ui->SetactivationLayerBias_pb->setEnabled(0);
+        ui->calculate_pb->setEnabled(0);
+
         for (int i = 0; i<inputs.size();i++)
         {
            inputs.at(i)->~QSpinBox();
         }
         inputs.clear();
         inputs.shrink_to_fit();
+        all_weights.clear();
+        all_weights.shrink_to_fit();
+
+        buttons.at(0)->setToolTip("");
+        buttons.at(1)->setToolTip("");
+        buttons.at(2)->setToolTip("");
+
     }
 
     //create
@@ -50,6 +131,8 @@ void MainWindow::create_shapes()
         inputs.at(i)->raise();
         inputs.at(i)->show();
         inputs.at(i)->setEnabled(0);
+
+        inputs.at(i)->setToolTip("");
     }
 
     QTimer::singleShot(10, this, [=](){
@@ -66,7 +149,7 @@ void MainWindow::create_shapes()
             std::vector<int> temp;
             all_weights.push_back(temp);
 
-            weights_input * inputs_widget = new weights_input(nullptr,i,number_nodes,&(all_weights.at(i)));
+            weights_input * inputs_widget = new weights_input(nullptr,i,number_nodes,&(all_weights.at(i)),&inputs,&buttons);
             inputs_widget->show();
             inputs_widget->raise();
 
@@ -77,6 +160,16 @@ void MainWindow::create_shapes()
                 inputs.at(i+1)->setEnabled(1);
                 //inputs.at(i+1)->setFocus();
             }
+            else
+            {
+                ui->toActivateLabel_l->setText(QString("<ul>\
+                                                        <li>Set weights of Hidden layer to Activation Layer.</li>\
+                                                        <li>Set biases of Hidden layer nodes.</li>\
+                                                        <li>Set biases of Activation Layer nodes.</li>\
+                                                        </ul>"));
+                ui->SethiddenLayerBias_pb->setEnabled(1);
+            }
+
         });
 
     }

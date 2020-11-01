@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QVector>
 #include <QSpinBox>
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -43,12 +44,15 @@ private:
     uint8_t number_inputs=0;
     uint8_t number_nodes=0;
     QVector<QSpinBox*> inputs;
+    QVector<QPushButton*> buttons;
 
     std::vector<std::vector<int>> all_weights;
 
     double sigmoid(double number);
 
+
 private slots:
     void create_shapes();
+    void output_calculation();
 };
 #endif // MAINWINDOW_H
