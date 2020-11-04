@@ -43,10 +43,12 @@ private:
     Ui::MainWindow *ui;
     uint8_t number_inputs=0;
     uint8_t number_nodes=0;
-    QVector<QSpinBox*> inputs;
+    QVector<QDoubleSpinBox*> inputs;
     QVector<QPushButton*> buttons;
 
-    std::vector<std::vector<int>> all_weights;
+    std::vector<std::vector<double>> all_weights;
+
+    std::vector<double> hidden_layer_output;
 
     double sigmoid(double number);
 

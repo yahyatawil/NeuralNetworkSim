@@ -15,14 +15,14 @@ class weights_input : public QWidget
     Q_OBJECT
 
 public:
-    explicit weights_input(QWidget *parent = nullptr,int8_t input_num = 0,int8_t nodes_num = 0, std::vector<int> * weights = new std::vector<int>(10),QVector<QSpinBox*> * input_boxes =  new QVector<QSpinBox*>,QVector<QPushButton*> * buttons = new QVector<QPushButton*>);
+    explicit weights_input(QWidget *parent = nullptr,int8_t input_num = 0,int8_t nodes_num = 0, std::vector<double> * weights = new std::vector<double>(10),QVector<QDoubleSpinBox*> * input_boxes =  new QVector<QDoubleSpinBox*>,QVector<QPushButton*> * buttons = new QVector<QPushButton*>);
     ~weights_input();
 
 private:
     Ui::weights_input *ui;
-    QVector<QSpinBox*> weights_boxes;
+    QVector<QDoubleSpinBox*> weights_boxes;
     int8_t _nodes_num;
-    std::vector<int> * _weights;
+    std::vector<double> * _weights;
     QPushButton * setbutton;
 };
 

@@ -5,7 +5,7 @@
 #include <QPushButton>
 #include <QLabel>
 
-weights_input::weights_input(QWidget *parent,int8_t input_num ,int8_t nodes_num, std::vector<int> * weights, QVector<QSpinBox*> * input_boxes,QVector<QPushButton*> * buttons):
+weights_input::weights_input(QWidget *parent,int8_t input_num ,int8_t nodes_num, std::vector<double> * weights, QVector<QDoubleSpinBox*> * input_boxes,QVector<QPushButton*> * buttons):
     QWidget(parent),
     ui(new Ui::weights_input)
 {
@@ -28,8 +28,9 @@ weights_input::weights_input(QWidget *parent,int8_t input_num ,int8_t nodes_num,
         if(j >= nodes_num) break;
         for(int col=0;col<10;col=col+2)
         {
-           weights_boxes.push_back( new QSpinBox(this));
+           weights_boxes.push_back( new QDoubleSpinBox(this));
            weights_boxes.at(j)->setButtonSymbols(QAbstractSpinBox::NoButtons);
+           weights_boxes.at(j)->setMinimum(-99.000000000000000);
            weights_boxes.at(j)->raise();
            weights_boxes.at(j)->show();
            QLabel * label = new QLabel(QString("W%1%2").arg(input_num).arg(j), this);
@@ -50,7 +51,7 @@ weights_input::weights_input(QWidget *parent,int8_t input_num ,int8_t nodes_num,
         if(j >= nodes_num) break;
         for(int col=0;col<10;col=col+2)
         {
-           weights_boxes.push_back( new QSpinBox(this));
+           weights_boxes.push_back( new QDoubleSpinBox(this));
            weights_boxes.at(j)->setButtonSymbols(QAbstractSpinBox::NoButtons);
            weights_boxes.at(j)->raise();
            weights_boxes.at(j)->show();
