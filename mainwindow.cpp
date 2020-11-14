@@ -17,33 +17,80 @@ void MainWindow::output_calculation()
 //Z21 = W12X1+W22X2 ... + Wn2Xn + b12
 // ...
 //Z = W1a1 + W2a2+ .. + Wm + b
-//all_weights = <W1,W2,W3,B,w,b>
+//all_weights = <W1,W2,B,w,b>
 
+    qDebug()<<all_weights;
+
+    for(int i = 0;i<all_weights.size();i++)
+    {
+        QString text_to_print;
+        if(i < ui->inputs_sb->value())
+        {
+            text_to_print.append("Input weights:");
+        }
+        else if(i == ui->inputs_sb->value())
+        {
+            text_to_print.append("Hidden layer bias:");
+        }
+        else if(i == (ui->inputs_sb->value() +1 ))
+        {
+            text_to_print.append("Hidden layer weights:");
+        }
+        else if(i == (ui->inputs_sb->value()+2))
+        {
+            text_to_print.append("\nOutput Bias:");
+        }
+        for(int j = 0;j < all_weights.at(i).size() ; j++)
+        {
+            if(i < ui->inputs_sb->value())
+            {
+                text_to_print.append(QString::fromLatin1("W%1%2 = %3,").arg(i).arg(j).arg(all_weights.at(i).at(j)));
+            }
+            else if(i == ui->inputs_sb->value())
+            {
+                text_to_print.append(QString::fromLatin1("B%1 = %3,").arg(j).arg(all_weights.at(i).at(j)));
+            }
+            else if(i == (ui->inputs_sb->value()+1))
+            {
+                text_to_print.append(QString::fromLatin1("W%1 = %3,").arg(j).arg(all_weights.at(i).at(j)));
+            }
+            else if(i == (ui->inputs_sb->value()+2))
+            {
+                text_to_print.append(QString::fromLatin1("B=%1").arg(all_weights.at(i).at(j)));
+            }
+        }
+        ui->allweights_tb->append(text_to_print);
+    }
+    ui->allweights_tb->scroll(0,0);
     std::vector<double> hidden_biase;
     hidden_biase = all_weights.at(ui->inputs_sb->value());
-
+    qDebug()<<hidden_biase;
     std::vector<double> hidden_weights;
     hidden_weights = all_weights.at(ui->inputs_sb->value()+1);
+    qDebug()<<hidden_weights;
 
     for(int i=0;i<number_nodes;i++)
     {
-        int32_t output =0;
+        double output =0;
         for(int j=0;j<ui->inputs_sb->value();j++)
         {
-        output += (all_weights.at(j)).at(i)*inputs.at(j)->value();
+        qDebug()<<(all_weights.at(j)).at(i)<<'*'<<inputs.at(j)->value();
+
+        output += ((all_weights.at(j)).at(i)*inputs.at(j)->value());
         }
+        qDebug()<<'+'<<hidden_biase.at(i);
+
         output += hidden_biase.at(i);
-        qDebug()<<sigmoid(output);
+        qDebug()<<output<<sigmoid(output);
         hidden_layer_output.push_back(sigmoid(output));
     }
 
-    int32_t pre_output =0;
+    double pre_output =0;
     for(int i=0;i<number_nodes;i++)
     {
-        pre_output += hidden_layer_output.at(i)*hidden_weights.at(i);
+        pre_output += (hidden_layer_output.at(i)*hidden_weights.at(i));
     }
     pre_output += all_weights.at(ui->inputs_sb->value()+2).at(0);
-    qDebug()<<sigmoid(pre_output);
 
     ui->output_l->setNum(sigmoid(pre_output));
 }
@@ -109,8 +156,6 @@ MainWindow::MainWindow(QWidget *parent)
                                                 <li>Ready to Calculate</li>\
                                                 </ul>"));
         ui->calculate_pb->setEnabled(1);
-
-        qDebug()<<all_weights;
 
     });
 

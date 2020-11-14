@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>NN-Sim</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/logo.ico</normaloff>:/logo.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="calculate_pb">
@@ -220,7 +224,7 @@
       <rect>
        <x>70</x>
        <y>3</y>
-       <width>111</width>
+       <width>121</width>
        <height>25</height>
       </rect>
      </property>
@@ -353,6 +357,23 @@
      <string/>
     </property>
    </widget>
+   <widget class="QTextBrowser" name="allweights_tb">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>400</y>
+      <width>641</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="html">
+     <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Entered Weights and Biases ...&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
    <zorder>layoutWidget</zorder>
    <zorder>label_9</zorder>
    <zorder>calculate_pb</zorder>
@@ -364,6 +385,7 @@
    <zorder>groupBox_3</zorder>
    <zorder>groupBox_4</zorder>
    <zorder>output_l</zorder>
+   <zorder>allweights_tb</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

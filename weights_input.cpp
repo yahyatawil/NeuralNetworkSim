@@ -53,6 +53,7 @@ weights_input::weights_input(QWidget *parent,int8_t input_num ,int8_t nodes_num,
         {
            weights_boxes.push_back( new QDoubleSpinBox(this));
            weights_boxes.at(j)->setButtonSymbols(QAbstractSpinBox::NoButtons);
+           weights_boxes.at(j)->setMinimum(-99.000000000000000);
            weights_boxes.at(j)->raise();
            weights_boxes.at(j)->show();
            QLabel * label = new QLabel(QString("%1").arg(j), this);
@@ -109,7 +110,7 @@ weights_input::weights_input(QWidget *parent,int8_t input_num ,int8_t nodes_num,
        {
            QString ToolTipTxt;
            for (int i=0;i<_nodes_num;i++)
-               ToolTipTxt.append(QString("%1 ").arg(weights_boxes.at(i++)->value()));
+               ToolTipTxt.append(QString("%1 ").arg(weights_boxes.at(i)->value()));
 
            if(input_num == -1) // hidden bias
            {
