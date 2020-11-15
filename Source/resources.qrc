@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>hasan-kalyoncu-universitesi-logo.png</file>
+        <file>logo.ico</file>
+    </qresource>
+</RCC>
